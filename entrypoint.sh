@@ -26,8 +26,17 @@ fi
 
 mkdir -p /etc/grafana/dashboards
 
-curl http://bootstrap:5000/grafana/provisioning/datasources/graphite.yaml -o /etc/grafana/provisioning/datasources/graphite.yaml
 curl http://bootstrap:5000/grafana/provisioning/dashboards/asyncy.yaml -o /etc/grafana/provisioning/dashboards/asyncy.yaml
-curl http://bootstrap:5000/grafana/dashboards/graphite-carbon-metrics_rev2.json -o /etc/grafana/dashboards/graphite-carbon-metrics_rev2.json
 
+data_sources="prometheus"
+for data_source in $data_sources; do
+  curl http://bootstrap:5000/grafana/provisioning/datasources/$data_source.yaml -o /etc/grafana/provisioning/datasources/$data_source.yaml
+done
+
+dashboards="grafana prometheus traefik"
+for dashboard in $dashboards; do
+  curl http://bootstrap:5000/grafana/dashboards/$dashboard.json -o /etc/grafana/dashboards/$dashboard.json
+done
+
+grafana-cli plugins install grafana-piechart-panel
 /run.sh
