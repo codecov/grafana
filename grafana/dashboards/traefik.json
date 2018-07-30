@@ -1,7 +1,7 @@
 {
   "__inputs": [
     {
-      "name": "DS_PROMETHEUS",
+      "name": "Prometheus",
       "label": "Prometheus",
       "description": "",
       "type": "datasource",
@@ -605,8 +605,8 @@
   "schemaVersion": 14,
   "style": "dark",
   "tags": [
-    "traefik",
-    "prometheus"
+    "internal",
+    "proxy"
   ],
   "templating": {
     "list": [

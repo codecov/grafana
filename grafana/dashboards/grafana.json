@@ -1,7 +1,7 @@
 {
   "__inputs": [
     {
-      "name": "DS_PROMETHEUS",
+      "name": "Prometheus",
       "label": "prometheus",
       "description": "",
       "type": "datasource",
@@ -1613,7 +1613,7 @@
   "schemaVersion": 14,
   "style": "dark",
   "tags": [
-    "grafana"
+    "internal"
   ],
   "templating": {
     "list": [
@@ -1689,6 +1689,6 @@
     ]
   },
   "timezone": "browser",
-  "title": "Grafana Internals",
+  "title": "Grafana",
   "version": 2
 }

@@ -1,7 +1,7 @@
 {
   "__inputs": [
     {
-      "name": "DS_PROMETHEUS",
+      "name": "Prometheus",
       "label": "prometheus",
       "description": "",
       "type": "datasource",
@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "4.2.0"
+      "version": "4.4.3"
     },
     {
       "type": "panel",
@@ -33,21 +33,29 @@
       "id": "singlestat",
       "name": "Singlestat",
       "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
     }
   ],
   "annotations": {
     "list": []
   },
+  "description": "Minio stores raw and processed uploads.",
   "editable": true,
-  "gnetId": null,
+  "gnetId": 6248,
   "graphTooltip": 0,
   "hideControls": false,
   "id": null,
   "links": [],
+  "refresh": "5s",
   "rows": [
     {
-      "collapse": true,
-      "height": 154,
+      "collapse": false,
+      "height": 164,
       "panels": [
         {
           "cacheTimeout": null,
@@ -58,14 +66,15 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_PROMETHEUS}",
-          "format": "s",
+          "datasource": "Prometheus",
+          "description": "Start time of the Minio server",
+          "format": "dtdurations",
           "gauge": {
             "maxValue": 100,
             "minValue": 0,
             "show": false,
             "thresholdLabels": false,
-            "thresholdMarkers": true
+            "thresholdMarkers": false
           },
           "id": 1,
           "interval": null,
@@ -95,20 +104,23 @@
               "to": "null"
             }
           ],
-          "span": 4,
+          "span": 8,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
             "lineColor": "rgb(31, 120, 193)",
-            "show": false
+            "show": true
           },
+          "tableColumn": "",
           "targets": [
             {
-              "expr": "minio_uptime",
+              "expr": "time() - max(process_start_time_seconds)",
+              "format": "time_series",
               "intervalFactor": 2,
-              "metric": "minio_uptime",
+              "legendFormat": "Start time of the Minio server",
+              "metric": "process_start_time_seconds",
               "refId": "A",
-              "step": 600
+              "step": 60
             }
           ],
           "thresholds": "",
@@ -122,836 +134,230 @@
               "value": "null"
             }
           ],
-          "valueName": "current"
-        },
-        {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "datasource": "${DS_PROMETHEUS}",
-          "format": "decbytes",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
-          "id": 3,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "span": 4,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
-          },
-          "targets": [
-            {
-              "expr": "min(minio_storage_free_disk_space)",
-              "intervalFactor": 2,
-              "metric": "",
-              "refId": "A",
-              "step": 600
-            }
-          ],
-          "thresholds": "",
-          "title": "Stroage Free Space",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
           "valueName": "avg"
-        },
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 241,
+      "panels": [
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "datasource": "${DS_PROMETHEUS}",
-          "format": "decbytes",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "Prometheus",
+          "decimals": null,
+          "description": "Data sent by current Minio server instance",
+          "fill": 1,
           "id": 4,
-          "interval": null,
+          "legend": {
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": true,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
           "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 4,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
-          },
+          "stack": false,
+          "steppedLine": false,
           "targets": [
             {
-              "expr": "min(minio_storage_total_disk_space)",
+              "expr": "rate(minio_network_sent_bytes_total{instance=\"$instance:$metrics_port\"}[5m])",
+              "format": "time_series",
               "intervalFactor": 2,
+              "legendFormat": "Transmited:",
+              "metric": "minio_network_sent_bytes_total",
               "refId": "A",
-              "step": 600
+              "step": 10
             }
           ],
-          "thresholds": "",
-          "title": "Storage Total Space",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": null,
-      "repeatRowId": null,
-      "showTitle": false,
-      "title": "Uptime",
-      "titleSize": "h6"
-    },
-    {
-      "collapse": true,
-      "height": 154,
-      "panels": [
-        {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "datasource": "${DS_PROMETHEUS}",
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Data Transmited",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
           },
-          "id": 2,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
             {
-              "name": "value to text",
-              "value": 1
+              "format": "decbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
             },
             {
-              "name": "range to text",
-              "value": 2
+              "format": "decbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
             }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "span": 3,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
-          },
-          "targets": [
-            {
-              "expr": "min(minio_storage_online_disks)",
-              "intervalFactor": 2,
-              "legendFormat": "online_disk",
-              "metric": "",
-              "refId": "A",
-              "step": 600
-            }
-          ],
-          "thresholds": "4, 8",
-          "title": "Online Disks",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          ]
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": [
-            "rgba(50, 172, 45, 0.97)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(245, 54, 54, 0.9)"
-          ],
-          "datasource": "${DS_PROMETHEUS}",
-          "format": "none",
-          "gauge": {
-            "maxValue": null,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": true,
-            "thresholdMarkers": true
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "Prometheus",
+          "decimals": null,
+          "description": "Data received by current Minio server instance",
+          "fill": 1,
+          "id": 5,
+          "legend": {
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": true,
+            "values": true
           },
-          "id": 11,
-          "interval": null,
+          "lines": true,
+          "linewidth": 1,
           "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "span": 3,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
-          },
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 4,
+          "stack": false,
+          "steppedLine": false,
           "targets": [
             {
-              "expr": "max(minio_storage_offline_disks)",
+              "expr": "rate(minio_network_received_bytes_total{instance=\"$instance:$metrics_port\"}[5m])",
+              "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "offline_disk",
+              "legendFormat": "Received:",
+              "metric": "minio_network_received_bytes_total",
               "refId": "A",
-              "step": 600
+              "step": 10
             }
           ],
-          "thresholds": "1, 2",
-          "title": "Offline Disks",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Data Received",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
             {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
+              "format": "decbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "decbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
             }
-          ],
-          "valueName": "current"
+          ]
         },
         {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "datasource": "${DS_PROMETHEUS}",
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
-          "id": 7,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "span": 3,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
-          },
-          "targets": [
-            {
-              "expr": "min(minio_storage_write_quorum)",
-              "intervalFactor": 2,
-              "refId": "A",
-              "step": 600
-            }
-          ],
-          "thresholds": "",
-          "title": "Write quorum",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            },
-            {
-              "op": "=",
-              "text": "FS",
-              "value": 1
-            },
-            {
-              "op": "=",
-              "text": "Erasure",
-              "value": 2
-            }
-          ],
-          "valueName": "current"
-        },
-        {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "datasource": "${DS_PROMETHEUS}",
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "Prometheus",
+          "description": "Data received x transmited by current Minio server instance",
+          "fill": 1,
+          "height": "",
           "id": 6,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "span": 3,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
-          },
-          "targets": [
-            {
-              "expr": "min(minio_storage_read_quorum)",
-              "intervalFactor": 2,
-              "refId": "A",
-              "step": 600
-            }
-          ],
-          "thresholds": "",
-          "title": "Read quorum",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": null,
-      "repeatRowId": null,
-      "showTitle": false,
-      "title": "Disk Quorum",
-      "titleSize": "h6"
-    },
-    {
-      "collapse": true,
-      "height": 250,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "datasource": "${DS_PROMETHEUS}",
-          "fill": 1,
-          "format": "",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
-          "id": 8,
-          "interval": null,
           "legend": {
             "avg": false,
-            "current": false,
+            "current": true,
             "max": false,
             "min": false,
             "show": true,
             "total": false,
-            "values": false
+            "values": true
           },
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
+          "nullPointMode": "null",
           "percentage": false,
           "pointradius": 5,
           "points": false,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
           "renderer": "flot",
           "seriesOverrides": [],
+          "spaceLength": 10,
           "span": 4,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
-          },
           "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(irate(minio_conn_total_output_bytes{minio_host=~\"$Host$\"}[5m])) by (minio_host)",
+              "expr": "rate(minio_network_received_bytes_total{instance=\"$instance:$metrics_port\"}[5m])",
+              "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "",
-              "metric": "",
+              "legendFormat": "Received: ",
+              "metric": "minio_network_received_bytes_total",
               "refId": "A",
-              "step": 600
-            }
-          ],
-          "thresholds": "",
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Server Output bytes/s",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "avg",
-          "xaxis": {
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "Bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
+              "step": 10
             },
             {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "datasource": "${DS_PROMETHEUS}",
-          "fill": 1,
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
-          "id": 9,
-          "interval": null,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "span": 4,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
-          },
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(irate(minio_conn_total_input_bytes{minio_host=~\"$Host\"}[5m])) by (minio_host)",
+              "expr": "rate(minio_network_sent_bytes_total{instance=\"$instance:$metrics_port\"}[5m])",
+              "format": "time_series",
               "intervalFactor": 2,
-              "legendFormat": "",
-              "refId": "A",
-              "step": 600
-            }
-          ],
-          "thresholds": "",
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Server Input bytes/s",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "avg",
-          "xaxis": {
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "Bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "datasource": "${DS_PROMETHEUS}",
-          "fill": 1,
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
-          "id": 10,
-          "interval": null,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "span": 4,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
-          },
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(irate(minio_conn_total_output_bytes[5m]))",
-              "intervalFactor": 2,
-              "legendFormat": "Output",
-              "refId": "A",
-              "step": 600
-            },
-            {
-              "expr": "sum(irate(minio_conn_total_input_bytes[5m]))",
-              "intervalFactor": 2,
-              "legendFormat": "Input",
+              "legendFormat": "Transmited:",
               "refId": "B",
-              "step": 600
+              "step": 10
             }
           ],
-          "thresholds": "",
+          "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
           "title": "Total In/Out Throughput",
@@ -961,16 +367,8 @@
             "value_type": "individual"
           },
           "type": "graph",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current",
           "xaxis": {
+            "buckets": null,
             "mode": "time",
             "name": null,
             "show": true,
@@ -978,7 +376,133 @@
           },
           "yaxes": [
             {
-              "format": "Bps",
+              "format": "decbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "decbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "Prometheus",
+          "description": "The current aggregate time spent servicing all HTTP requests  in seconds",
+          "fill": 1,
+          "id": 7,
+          "legend": {
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 12,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "rate(minio_http_requests_duration_seconds_sum{request_type=\"GET\",instance=\"$instance:$metrics_port\"}[5m])",
+              "format": "time_series",
+              "intervalFactor": 2,
+              "legendFormat": "GET",
+              "metric": "minio_http_requests_duration_seconds_count",
+              "refId": "A",
+              "step": 4
+            },
+            {
+              "expr": "rate(minio_http_requests_duration_seconds_sum{request_type=\"POST\",instance=\"$instance:$metrics_port\"}[5m])",
+              "format": "time_series",
+              "intervalFactor": 2,
+              "legendFormat": "POST",
+              "metric": "minio_http_requests_duration_seconds_count",
+              "refId": "B",
+              "step": 4
+            },
+            {
+              "expr": "rate(minio_http_requests_duration_seconds_sum{request_type=\"PUT\",instance=\"$instance:$metrics_port\"}[5m])",
+              "format": "time_series",
+              "intervalFactor": 2,
+              "legendFormat": "PUT",
+              "metric": "minio_http_requests_duration_seconds_count",
+              "refId": "C",
+              "step": 4
+            },
+            {
+              "expr": "rate(minio_http_requests_duration_seconds_sum{request_type=\"HEAD\",instance=\"$instance:$metrics_port\"}[5m])",
+              "format": "time_series",
+              "intervalFactor": 2,
+              "legendFormat": "HEAD",
+              "metric": "minio_http_requests_duration_seconds_count",
+              "refId": "D",
+              "step": 4
+            },
+            {
+              "expr": "rate(minio_http_requests_duration_seconds_sum{request_type=\"DELETE\",instance=\"$instance:$metrics_port\"}[5m])",
+              "format": "time_series",
+              "intervalFactor": 2,
+              "legendFormat": "DELETE",
+              "metric": "minio_http_requests_duration_seconds_count",
+              "refId": "E",
+              "step": 4
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "HTTP Requests duration/s",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -1000,29 +524,51 @@
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": false,
-      "title": "Disks Out/In",
+      "title": "Dashboard Row",
       "titleSize": "h6"
     }
   ],
   "schemaVersion": 14,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "storage"
+  ],
   "templating": {
     "list": [
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": "Prometheus",
         "hide": 0,
-        "includeAll": true,
+        "includeAll": false,
         "label": null,
         "multi": false,
-        "name": "Host",
+        "name": "instance",
         "options": [],
-        "query": "label_values(minio_storage_offline_disks, minio_host)",
+        "query": "label_values(minio_total_disks,instance)",
         "refresh": 1,
-        "regex": "",
-        "sort": 0,
+        "regex": "/([a-zA-Z]{1,})/i",
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "Prometheus",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "metrics_port",
+        "options": [],
+        "query": "label_values(minio_total_disks,instance)",
+        "refresh": 1,
+        "regex": "/(\\d{1,4})/i",
+        "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
@@ -1032,7 +578,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {
@@ -1060,7 +606,7 @@
       "30d"
     ]
   },
-  "timezone": "browser",
-  "title": "Minio Dashboard",
-  "version": 3
+  "timezone": "",
+  "title": "Minio",
+  "version": 4
 }
